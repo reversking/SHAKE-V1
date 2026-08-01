@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>17.0</VCProjectVersion>
+    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{f1fb4229-95b7-4fa8-ad27-5b31f66ba2ed}</ProjectGuid>
+    <RootNamespace>ReversShakeV1</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <ProjectName>Cheat</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(VC_ExecutablePath_x64);$(CommonExecutablePath);$(SolutionDir);$(ProjectDir);$(SolutionDir)Libraries\directx\include;$(SolutionDir)Libraries\xorstr\include;$(SolutionDir)Libraries\imgui\include;$(SolutionDir)Libraries\mjlib\include;$(ProjectDir)\Gui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir);$(ProjectDir);$(SolutionDir)Libraries\directx\lib\x64;$(LibraryPath)</LibraryPath>
+    <OutDir>..\Build\$(ProjectName)\</OutDir>
+    <TargetName>Shake_V1_Free</TargetName>
+    <ApplicationIcon>Resources\shake_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>TurnOffAllWarnings</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions);_CRT_SECURE_NO_WARNINGS</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <UACExecutionLevel>RequireAdministrator</UACExecutionLevel>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
+      <AdditionalDependencies>advapi32.lib;Shcore.lib;Gdiplus.lib;dxgi.lib;d3d11.lib;windowscodecs.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/ignore:4099 /ignore:4098 /ignore:4244 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Cheat\agpa2.c" />
+    <ClCompile Include="Gui\imgui.cpp" />
+    <ClCompile Include="Gui\imgui_demo.cpp" />
+    <ClCompile Include="Gui\imgui_draw.cpp" />
+    <ClCompile Include="Gui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="Gui\imgui_impl_win32.cpp" />
+    <ClCompile Include="Gui\imgui_tables.cpp" />
+    <ClCompile Include="Gui\imgui_widgets.cpp" />
+    <ClCompile Include="Gui\menu\helpers\anim\anim.cpp" />
+    <ClCompile Include="Gui\menu\interface\elements_manager.cpp" />
+    <ClCompile Include="Gui\menu\interface\menu_i.cpp" />
+    <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Libraries\mjlib\include\mjLib\mjLib.hpp" />
+    <ClInclude Include="..\Libraries\mjlib\include\mjLib\Process.hpp" />
+    <ClInclude Include="..\Libraries\mjlib\include\mjLib\String.hpp" />
+    <ClInclude Include="Cheat\TextureLoader.hpp" />
+    <ClInclude Include="Cheat\Brand.hpp" />
+    <ClInclude Include="Cheat\ConsoleBranding.hpp" />
+    <ClInclude Include="Cheat\ConsoleIcon.hpp" />
+    <ClInclude Include="Cheat\Cheat.hpp" />
+    <ClInclude Include="Cheat\EntityList.hpp" />
+    <ClInclude Include="Cheat\Features.hpp" />
+    <ClInclude Include="Cheat\Game.hpp" />
+    <ClInclude Include="Cheat\GameSDK.hpp" />
+    <ClInclude Include="Cheat\Globals.hpp" />
+    <ClInclude Include="Cheat\Memory.hpp" />
+    <ClInclude Include="Cheat\Particles.hpp" />
+    <ClInclude Include="Cheat\Ped.hpp" />
+    <ClInclude Include="Cheat\Print.hpp" />
+    <ClInclude Include="Cheat\SimpleMath.h" />
+    <ClInclude Include="Cheat\Sounds.hpp" />
+    <ClInclude Include="Cheat\Structs.hpp" />
+    <ClInclude Include="Cheat\Teleport.hpp" />
+    <ClInclude Include="Gui\imconfig.h" />
+    <ClInclude Include="Gui\imgui.h" />
+    <ClInclude Include="Gui\imgui_impl_dx11.h" />
+    <ClInclude Include="Gui\imgui_impl_win32.h" />
+    <ClInclude Include="Gui\imgui_internal.h" />
+    <ClInclude Include="Gui\imstb_rectpack.h" />
+    <ClInclude Include="Gui\imstb_textedit.h" />
+    <ClInclude Include="Gui\imstb_truetype.h" />
+    <ClInclude Include="Gui\Menu.hpp" />
+    <ClInclude Include="Gui\menu\bytes\bg.h" />
+    <ClInclude Include="Gui\menu\bytes\esp.h" />
+    <ClInclude Include="Gui\menu\bytes\icon.h" />
+    <ClInclude Include="Gui\menu\bytes\loadbg.h" />
+    <ClInclude Include="Gui\menu\bytes\logo.h" />
+    <ClInclude Include="Gui\menu\bytes\medium.h" />
+    <ClInclude Include="Gui\menu\bytes\semibold.h" />
+    <ClInclude Include="Gui\menu\bytes\caviar.h" />
+    <ClInclude Include="Gui\menu\defs\colors.h" />
+    <ClInclude Include="Gui\menu\defs\fonts.h" />
+    <ClInclude Include="Gui\menu\defs\textures.h" />
+    <ClInclude Include="Gui\menu\helpers\anim\anim.h" />
+    <ClInclude Include="Gui\menu\helpers\anim\hash.hpp" />
+    <ClInclude Include="Gui\menu\helpers\elastic.h" />
+    <ClInclude Include="Gui\menu\helpers\helpers.h" />
+    <ClInclude Include="Gui\menu\helpers\render.h" />
+    <ClInclude Include="Gui\menu\helpers\restore.h" />
+    <ClInclude Include="Gui\menu\helpers\widgets.h" />
+    <ClInclude Include="Gui\menu\interface\elements_manager.h" />
+    <ClInclude Include="Gui\menu\interface\menu_i.h" />
+    <ClInclude Include="Overlay\Overlay.hpp" />
+    <ClInclude Include="Overlay\OverlayDraw.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Cheat\SimpleMath.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

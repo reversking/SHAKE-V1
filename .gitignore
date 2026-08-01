@@ -1,0 +1,33 @@
+﻿# Build / IDE
+.vs/
+Build/*
+!Build/Cheat/
+Build/Cheat/*
+!Build/Cheat/Shake_V1_Free.exe
+**/x64/
+**/x86/
+**/Debug/
+**/Release/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.opendb
+ipch/
+*.obj
+*.pdb
+*.ilk
+*.exp
+*.log
+*.tlog
+*.idb
+*.ipdb
+*.iobj
+*.aps
+
+# Local / temp
+*.tmp
+*.bak
+Thumbs.db
+Desktop.ini

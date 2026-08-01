@@ -1,0 +1,74 @@
+Menüden tetikleme (renk + kalınlık)
+                        if (Cheats::Esp::skeletonEsp) {
+                            ImColor skeletonColor = ImColor(
+                                Cheats::Esp::skeletonEspColor[0],
+                                Cheats::Esp::skeletonEspColor[1],
+                                Cheats::Esp::skeletonEspColor[2],
+                                1.0f
+                            );
+                            m_esp_draw.draw_skeleton(skeletonColor, (float)Cheats::Esp::skeletonEspSize);
+                        }
+Önce aynı karede on_draw + set_positions çalışıyor; iskelet bunların ardından geliyor.
+
+Silüet dikdörtgeni (on_draw içinde, iskelet için referans)
+        ImGui::InvisibleButton("##esp_preview_sil", ImVec2(bodyW, bodyH));
+        ImVec2 boxMin = ImGui::GetItemRectMin();
+        ImVec2 boxMax = ImGui::GetItemRectMax();
+        box.x = (int)(boxMin.x - wp.x);
+        box.y = (int)(boxMin.y - wp.y);
+        box.w = (int)(boxMax.x - boxMin.x);
+        box.h = (int)(boxMax.y - boxMin.y);
+        m_preview_silhouette_min = boxMin;
+        m_preview_silhouette_max = boxMax;
+        m_preview_silhouette_valid = (box.w > 0 && box.h > 0);
+Üye alanlar
+    Box_t box = { 42, 48, 200, 440 };
+    ImVec2 m_preview_silhouette_min{};
+    ImVec2 m_preview_silhouette_max{};
+    bool m_preview_silhouette_valid = false;
+İskelet çizimi (normalize kemik oranları + çizgi çiftleri)
+    void draw_skeleton(ImColor color, float thickness = 2.0f) {
+        if (!m_preview_silhouette_valid)
+            return;
+        ImVec2 boxTopLeft = m_preview_silhouette_min;
+        const float bw = m_preview_silhouette_max.x - m_preview_silhouette_min.x;
+        const float bh = m_preview_silhouette_max.y - m_preview_silhouette_min.y;
+        if (bw < 2.f || bh < 2.f)
+            return;
+        ImDrawList* drawList = ImGui::GetForegroundDrawList();
+        const float clipPad = ImMax(8.f, thickness * 3.f);
+        drawList->PushClipRect(
+            ImVec2(boxTopLeft.x - clipPad, boxTopLeft.y - clipPad),
+            ImVec2(boxTopLeft.x + bw + clipPad, boxTopLeft.y + bh + clipPad),
+            true);
+        float alpha = ImGui::GetStyle().Alpha;
+        auto bonePos = [&](int boneId) -> ImVec2 {
+            switch (boneId) {
+            case 0:  return ImVec2(boxTopLeft.x + 0.48f * bw, boxTopLeft.y + 0.055f * bh);
+            case 2:  return ImVec2(boxTopLeft.x + 0.48f * bw, boxTopLeft.y + 0.16f * bh);
+            case 7:  return ImVec2(boxTopLeft.x + 0.26f * bw, boxTopLeft.y + 0.22f * bh);
+            case 8:  return ImVec2(boxTopLeft.x + 0.72f * bw, boxTopLeft.y + 0.22f * bh);
+            case 1:  return ImVec2(boxTopLeft.x + 0.48f * bw, boxTopLeft.y + 0.38f * bh);
+            case 3:  return ImVec2(boxTopLeft.x + 0.10f * bw, boxTopLeft.y + 0.49f * bh);
+            case 4:  return ImVec2(boxTopLeft.x + 0.87f * bw, boxTopLeft.y + 0.49f * bh);
+            case 9:  return ImVec2(boxTopLeft.x + 0.38f * bw, boxTopLeft.y + 0.68f * bh);
+            case 10: return ImVec2(boxTopLeft.x + 0.60f * bw, boxTopLeft.y + 0.68f * bh);
+            case 5:  return ImVec2(boxTopLeft.x + 0.38f * bw, boxTopLeft.y + 0.92f * bh);
+            case 6:  return ImVec2(boxTopLeft.x + 0.60f * bw, boxTopLeft.y + 0.92f * bh);
+            default: return ImVec2(boxTopLeft.x + 0.48f * bw, boxTopLeft.y + 0.38f * bh);
+            }
+        };
+        ImU32 skeletonColor = IM_COL32((int)(color.Value.x * 255), (int)(color.Value.y * 255), (int)(color.Value.z * 255), (int)(255 * alpha));
+        drawList->AddLine(bonePos(0), bonePos(2), skeletonColor, thickness);
+        drawList->AddLine(bonePos(2), bonePos(7), skeletonColor, thickness);
+        drawList->AddLine(bonePos(2), bonePos(8), skeletonColor, thickness);
+        drawList->AddLine(bonePos(7), bonePos(3), skeletonColor, thickness);
+        drawList->AddLine(bonePos(8), bonePos(4), skeletonColor, thickness);
+        drawList->AddLine(bonePos(2), bonePos(1), skeletonColor, thickness);
+        drawList->AddLine(bonePos(1), bonePos(9), skeletonColor, thickness);
+        drawList->AddLine(bonePos(9), bonePos(5), skeletonColor, thickness);
+        drawList->AddLine(bonePos(1), bonePos(10), skeletonColor, thickness);
+        drawList->AddLine(bonePos(10), bonePos(6), skeletonColor, thickness);
+        drawList->PopClipRect();
+    }
+Özet: Silüet kutusu bw×bh içinde 0–1 oranlı bonePos noktaları; kemikler arası 10 AddLine ile silent_preview.h içindeki drawSkeletonLines ile aynı bağlantı sırası. Çizim GetForegroundDrawList() ile yapılıyor (child EndChild gradientinin altında kalmaması için).
